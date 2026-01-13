@@ -1,0 +1,7 @@
+typescript=js+types
+
+TS actually never run but it convert ts into js then compile like type checker
+eg 
+function greet(name: string): string{  // here second string is for function return type
+    return "Hello"
+}
