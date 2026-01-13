@@ -1,7 +1,15 @@
 /*
 type narrowing
+Type narrowing is how TypeScript reduces a broad type (usually a union)
+into a more specific type using runtime checks, so you can safely access properties and methods.
+
 unknown is also a type and it is similar to any just provide a value to this variable before using it so it is safer than any
 */
+
+
+//  ways to do type narrowing
+
+// typeof
 function getChai(kind: string | number){
     if(typeof kind === 'string'){
         return `Here is your ${kind} chai`;
@@ -9,6 +17,8 @@ function getChai(kind: string | number){
     return `chai order number: ${kind}`;  // requirement of this separate type is so that is suggest respective methods to both types
 }
 
+
+// equality narrowing
 function chai(size: "small" | "medium" | number){
     if(size === "small")
         return "small chai..."
@@ -18,23 +28,39 @@ function chai(size: "small" | "medium" | number){
     return `${size}ml chai...  `
 }
 
-class cuttingChai{
-    serve(){
-        return "cutting chai"
-    }
-}
-class kulhadChai{
-    serve(){
-        return "kulhad chai..."
-    }
+// discriminated union narrowing
+type Shape =
+  | { kind: "circle"; radius: number }
+  | { kind: "square"; side: number };
+
+function area(shape: Shape) {
+  switch (shape.kind) {
+    case "circle":
+      return Math.PI * shape.radius ** 2;
+    case "square":
+      return shape.side ** 2;
+  }
 }
 
-function chaiServe(chai: cuttingChai | kulhadChai){
-    if(chai instanceof cuttingChai){
-        return chai.serve();
-    }
-    return chai.serve();
-}  
+
+
+// instance narrowing
+class User {
+  login() {}
+}
+
+class Admin {
+  access() {}
+}
+
+function check(u: User | Admin) {
+  if (u instanceof User) {
+    u.login();
+  } else {
+    u.access();
+  }
+}
+
 
 //Type keyword
 type chaiOrder = {
@@ -51,6 +77,8 @@ function followingChaiOrderProperty(obj: any): obj is chaiOrder{  // v.v imp so 
     )
 }
 
+
+// in operator narrowing
 type masalaChai = {type: "masala", spiceLevel: number}
 type gingerChai = {type: "ginger", amount: number}
 type elaichiChai = {type: "elaichi", aroma: number}
@@ -62,3 +90,14 @@ function brew(order: masalaChai | gingerChai){
         return `brewing masala chai with spice level ${order.spiceLevel}`;
     }
 }
+
+/*
+Type narrowing is the result, while a type guard is a technique used to achieve type narrowing.
+
+A type guard is a check or function that tells TypeScript how to narrow a type.
+Type guards can be:
+typeof
+instanceof
+in
+
+*/
