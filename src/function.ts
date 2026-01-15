@@ -4,17 +4,34 @@ function makeChai(type: string, cups: number){
 
 makeChai("masala", 2)
 
-function getChaiPrice(): number {
+function getChaiPrice(): number {  // number return type
     //return "50"  // THROUGH error
     return 30
 }
 
-function solve(size: number){  // here dattatype can't determine
+function solve(size: number){  // here datatype is not defined so it can return any type
     if(!size)
         return null
     return size;
 }
 
-function solve2(): void {  // void when nothing is returning from function
+function logChai(): void {  // void when nothing is returning from function
     console.log("This function returns nothing")
+}
+
+//optional parameters
+function orderChai(type? : string){
+
+}
+
+// default parameters
+function solve2(name: string = "Alice"){
+    console.log(`Hello, ${name}`)
+}
+
+function complex(chai: {
+   type: string,
+   sugar: number
+}): number{
+    return 56
 }
